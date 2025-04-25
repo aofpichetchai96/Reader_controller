@@ -1,0 +1,13 @@
+body {
+    background-image: url('./assets/bg.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Bai Jamjuree', sans-serif;
+  }
+  
+  .login-container {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    color: white;
+  }

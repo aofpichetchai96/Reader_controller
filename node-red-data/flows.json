@@ -1,0 +1,470 @@
+[
+    {
+        "id": "3ebd7dd1585179f7",
+        "type": "tab",
+        "label": "Flow 20",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9a0484e332731286",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "172.10.0.9",
+        "tcpPort": 502,
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": 9600,
+        "serialDatabits": 8,
+        "serialStopbits": 1,
+        "serialParity": "none",
+        "serialConnectionDelay": 100,
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 1,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "4989570793f46ffd",
+        "type": "MC Protocol Connection",
+        "name": "",
+        "host": "172.10.0.9",
+        "port": "5551",
+        "protocol": "TCP",
+        "frame": "1E",
+        "plcType": "A",
+        "ascii": false,
+        "PLCStation": "",
+        "PCStation": "",
+        "PLCModuleNo": "",
+        "network": "",
+        "octalInputOutput": false,
+        "timeout": 1000
+    },
+    {
+        "id": "ace1716023c393aa",
+        "type": "http in",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "url": "/open",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "d98659bc234732b8",
+                "0bdc723c4e1221fd",
+                "a8d0d333f417e937"
+            ]
+        ]
+    },
+    {
+        "id": "0cc132239f32d3a7",
+        "type": "http response",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 650,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d98659bc234732b8",
+        "type": "template",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Success",
+        "output": "str",
+        "x": 520,
+        "y": 420,
+        "wires": [
+            [
+                "0cc132239f32d3a7"
+            ]
+        ]
+    },
+    {
+        "id": "8f33e84f10449202",
+        "type": "change",
+        "z": "3ebd7dd1585179f7",
+        "name": "set_on",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 340,
+        "wires": [
+            [
+                "1568a20d9eb28825"
+            ]
+        ]
+    },
+    {
+        "id": "f9d4ee7478d091e1",
+        "type": "delay",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1140,
+        "y": 460,
+        "wires": [
+            [
+                "2442f8b5206b3d01"
+            ]
+        ]
+    },
+    {
+        "id": "2442f8b5206b3d01",
+        "type": "change",
+        "z": "3ebd7dd1585179f7",
+        "name": "set_off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 460,
+        "wires": [
+            [
+                "1568a20d9eb28825"
+            ]
+        ]
+    },
+    {
+        "id": "0bdc723c4e1221fd",
+        "type": "debug",
+        "z": "3ebd7dd1585179f7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 520,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "4ce683d234775341",
+        "type": "switch",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 480,
+        "wires": [
+            [
+                "8f33e84f10449202"
+            ],
+            [
+                "a160834f1fd96fa8"
+            ]
+        ]
+    },
+    {
+        "id": "1568a20d9eb28825",
+        "type": "MC Write",
+        "z": "3ebd7dd1585179f7",
+        "name": "Door_001",
+        "topic": "",
+        "connection": "4989570793f46ffd",
+        "data": "payload",
+        "address": "M0",
+        "addressType": "str",
+        "dataType": "msg",
+        "errorHandling": "throw",
+        "outputs": 1,
+        "x": 1000,
+        "y": 400,
+        "wires": [
+            [
+                "f9d4ee7478d091e1",
+                "343e59822afb70cd"
+            ]
+        ]
+    },
+    {
+        "id": "a160834f1fd96fa8",
+        "type": "change",
+        "z": "3ebd7dd1585179f7",
+        "name": "set_on",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 970,
+        "y": 560,
+        "wires": [
+            [
+                "8a28b95c5f892c97"
+            ]
+        ]
+    },
+    {
+        "id": "d27d2ea87b37b222",
+        "type": "delay",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1160,
+        "y": 680,
+        "wires": [
+            [
+                "99f92ec98a063be1"
+            ]
+        ]
+    },
+    {
+        "id": "99f92ec98a063be1",
+        "type": "change",
+        "z": "3ebd7dd1585179f7",
+        "name": "set_off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 970,
+        "y": 680,
+        "wires": [
+            [
+                "8a28b95c5f892c97"
+            ]
+        ]
+    },
+    {
+        "id": "8a28b95c5f892c97",
+        "type": "MC Write",
+        "z": "3ebd7dd1585179f7",
+        "name": "Door_002",
+        "topic": "",
+        "connection": "4989570793f46ffd",
+        "data": "payload",
+        "address": "M1",
+        "addressType": "str",
+        "dataType": "msg",
+        "errorHandling": "throw",
+        "outputs": 1,
+        "x": 1020,
+        "y": 620,
+        "wires": [
+            [
+                "d27d2ea87b37b222",
+                "28e7071721891adb"
+            ]
+        ]
+    },
+    {
+        "id": "07c8f47660a66671",
+        "type": "inject",
+        "z": "3ebd7dd1585179f7",
+        "name": "test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 810,
+        "y": 320,
+        "wires": [
+            [
+                "8f33e84f10449202"
+            ]
+        ]
+    },
+    {
+        "id": "05fd9fa38f066e20",
+        "type": "inject",
+        "z": "3ebd7dd1585179f7",
+        "name": "test",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 830,
+        "y": 580,
+        "wires": [
+            [
+                "a160834f1fd96fa8"
+            ]
+        ]
+    },
+    {
+        "id": "a8d0d333f417e937",
+        "type": "function",
+        "z": "3ebd7dd1585179f7",
+        "name": "function 1",
+        "func": "msg.payload = msg.payload.door\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 480,
+        "wires": [
+            [
+                "4ce683d234775341"
+            ]
+        ]
+    },
+    {
+        "id": "343e59822afb70cd",
+        "type": "debug",
+        "z": "3ebd7dd1585179f7",
+        "name": "door_2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "28e7071721891adb",
+        "type": "debug",
+        "z": "3ebd7dd1585179f7",
+        "name": "door_3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 600,
+        "wires": []
+    }
+]

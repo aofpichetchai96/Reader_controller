@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  php-apache:
+    build: .           
+    container_name: my-php-app
+    ports:
+      - "8500:80"
+    volumes:
+      - ./:/var/www/html
+    restart: always
+
+  node-red:
+    image: nodered/node-red:latest
+    container_name: my-node-red
+    ports:
+      - "1880:1880"
+    volumes:
+      - ./node-red-data:/data
+    restart: always
+
+  node-server:
+    image: node:18
+    container_name: my-node-service
+    working_dir: /app
+    volumes:
+      - ./node-service:/app
+    ports:
+      - "850:850"
+    # command: ["node", "index.js"]
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    container_name: my-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: piramid_db
+      MYSQL_USER: piramid
+      MYSQL_PASSWORD: P@ssw0rd
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

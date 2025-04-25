@@ -1,0 +1,5 @@
+logs
+config.php
+node_modules
+.env
+_logs
