@@ -13,17 +13,17 @@
 <body class="bg-gray-100 text-gray-800">
   <nav class="bg-black shadow p-4 mb-6">
     <div class="container mx-auto flex justify-between items-center">
-      <a href="index.html" class="flex items-center space-x-2 text-white">
+      <a href="index.php" class="flex items-center space-x-2 text-white">
         <img src="./assets/logo.png" alt="Logo" class="h-8 w-auto">
         <span class="font-semibold text-xl">ระบบจัดการสมาชิก</span>
       </a>
       <ul class="flex space-x-6 items-center">
-        <li><a href="index.html" class="text-white hover:underline">หน้าแรก</a></li>
-        <li><a href="members.html" class="text-white hover:underline">จัดการสมาชิก</a></li>
-        <li><a href="reports.html" class="text-white hover:underline">รายงาน</a></li>
-        <!-- <li><a href="about.html" class="text-white hover:underline">เกี่ยวกับ</a></li> -->
-        <!-- <li><a href="contacts.html" class="text-white hover:underline">ผู้ติดต่อ</a></li> -->
-        <a href="login.html" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Log out</a>
+        <li><a href="index.php" class="text-white hover:underline">หน้าแรก</a></li>
+        <li><a href="members.php" class="text-white hover:underline">จัดการสมาชิก</a></li>
+        <li><a href="reports.php" class="text-white hover:underline">รายงาน</a></li>
+        <!-- <li><a href="about.php" class="text-white hover:underline">เกี่ยวกับ</a></li> -->
+        <!-- <li><a href="contacts.php" class="text-white hover:underline">ผู้ติดต่อ</a></li> -->
+        <a href="login.php" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Log out</a>
       </ul>
     </div>
   </nav>

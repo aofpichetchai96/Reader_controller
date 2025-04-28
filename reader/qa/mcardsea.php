@@ -1,8 +1,8 @@
 <?php
-    require_once('config.php');
-    require_once('db.php');
     error_reporting(E_ERROR | E_PARSE);
     ini_set('display_errors', 0);
+    require_once('config.php');
+    require_once('db.php');
     $logDir = __DIR__ . "/logs";
     $time = strval(time());
     $rs_success = 'false';
@@ -25,12 +25,13 @@
 
     header('Content-type: application/json');
     header("Connection: close");
-
+   
     try {
         $sendUrl = "http://" . SERVER_HOST . ":" . SERVER_PORT . SERVER_PATH . "?cardid=" . $_GET['cardid'];    
         $opts = array('http' => array('timeout' => 2.0));
         $context = stream_context_create($opts);
         $response = @file_get_contents($sendUrl, false, $context);       
+        
         if ($response === false) {
             $logMessage = "Error Response Cardid : ".$_GET['cardid']. PHP_EOL;
             $logMessage .= "Error Response DateTime : ".date("Y-m-d H:i:s"). PHP_EOL;
@@ -63,7 +64,7 @@
         $logFile = $logDir . "/" . date("Y-m-d") . ".txt";    
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
-
+    // echo "http://" . SERVER_HOST . ":" . SERVER_PORT . SERVER_PATH . "?cardid=" . $_GET['cardid']; die;
     $cardid =  $_GET['cardid'] ? $_GET['cardid'] : '0';
     $cjihao = $_GET['cjihao'] ? $_GET['cjihao'] : '0';
     $mjihao = (int)$_GET['mjihao'] ? (int)$_GET['mjihao'] : 0;

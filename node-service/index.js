@@ -6,7 +6,7 @@ const PORT = 850;
 app.get('/qa/mcardsea', async (req, res) => {
   const { cardid } = req.query;
 
-  if(Number(cardid) === 1325788163 ||  Number(cardid) === 1325634291 ||  Number(cardid) === 142536){
+  if(Number(cardid) === 1325788163 ||  Number(cardid) === 1325634291 ||  Number(cardid) === 1425367){
     console.log('successful cardid : ', cardid);
 
     const rs = await axios.get('http://localhost:1880/open?door=1');

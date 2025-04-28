@@ -18,7 +18,7 @@
     <h2 class="text-2xl font-bold text-center mb-6">เข้าสู่ระบบ</h2>
 
     <!-- Login Form Fields -->
-    <form action="index.html" method="POST">
+    <form action="index.php" method="POST">
       <div class="mb-4">
         <label for="username" class="block text-white">ชื่อผู้ใช้</label>
         <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้" class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
@@ -30,7 +30,7 @@
       </div>
 
       <div class="mb-4">
-        <button   href="login.html"  class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200">เข้าสู่ระบบ</button>
+        <button   href="login.php"  class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200">เข้าสู่ระบบ</button>
       </div>
     </form>
   </div>
