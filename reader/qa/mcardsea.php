@@ -27,7 +27,7 @@
     header("Connection: close");
    
     try {
-        $sendUrl = "http://" . SERVER_HOST . ":" . SERVER_PORT . SERVER_PATH . "?cardid=" . $_GET['cardid'];    
+        $sendUrl = "http://" . SERVER_HOST . ":" . SERVER_PORT . SERVER_PATH . "?cardid=" . $_GET['cardid'] . "&cjihao=" . $_GET['cjihao'] . "&mjihao=" . $_GET['mjihao'];     
         $opts = array('http' => array('timeout' => 2.0));
         $context = stream_context_create($opts);
         $response = @file_get_contents($sendUrl, false, $context);       

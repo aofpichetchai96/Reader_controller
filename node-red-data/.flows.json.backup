@@ -42,10 +42,27 @@
         "type": "MC Protocol Connection",
         "name": "",
         "host": "172.10.0.9",
-        "port": "6551",
+        "port": "5551",
         "protocol": "TCP",
         "frame": "1E",
         "plcType": "A",
+        "ascii": false,
+        "PLCStation": "",
+        "PCStation": "",
+        "PLCModuleNo": "",
+        "network": "",
+        "octalInputOutput": false,
+        "timeout": 1000
+    },
+    {
+        "id": "4dbed77ef44773b6",
+        "type": "MC Protocol Connection",
+        "name": "",
+        "host": "192.168.0.1",
+        "port": 5001,
+        "protocol": "TCP",
+        "frame": "3E",
+        "plcType": "Q",
         "ascii": false,
         "PLCStation": "",
         "PCStation": "",
@@ -67,39 +84,9 @@
         "y": 440,
         "wires": [
             [
-                "d98659bc234732b8",
                 "0bdc723c4e1221fd",
-                "a8d0d333f417e937"
-            ]
-        ]
-    },
-    {
-        "id": "0cc132239f32d3a7",
-        "type": "http response",
-        "z": "3ebd7dd1585179f7",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 650,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "d98659bc234732b8",
-        "type": "template",
-        "z": "3ebd7dd1585179f7",
-        "name": "",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "handlebars",
-        "syntax": "mustache",
-        "template": "Success",
-        "output": "str",
-        "x": 520,
-        "y": 420,
-        "wires": [
-            [
-                "0cc132239f32d3a7"
+                "a8d0d333f417e937",
+                "550c3934d80f61fa"
             ]
         ]
     },
@@ -147,8 +134,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 1140,
-        "y": 460,
+        "x": 1200,
+        "y": 440,
         "wires": [
             [
                 "2442f8b5206b3d01"
@@ -175,7 +162,7 @@
         "to": "",
         "reg": false,
         "x": 950,
-        "y": 460,
+        "y": 480,
         "wires": [
             [
                 "1568a20d9eb28825"
@@ -243,14 +230,14 @@
         "address": "M0",
         "addressType": "str",
         "dataType": "msg",
-        "errorHandling": "throw",
+        "errorHandling": "msg",
         "outputs": 1,
         "x": 1000,
         "y": 400,
         "wires": [
             [
                 "f9d4ee7478d091e1",
-                "343e59822afb70cd"
+                "cc62acb7ac7197eb"
             ]
         ]
     },
@@ -434,7 +421,24 @@
         ]
     },
     {
-        "id": "343e59822afb70cd",
+        "id": "28e7071721891adb",
+        "type": "debug",
+        "z": "3ebd7dd1585179f7",
+        "name": "door_3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "cc62acb7ac7197eb",
         "type": "debug",
         "z": "3ebd7dd1585179f7",
         "name": "door_2",
@@ -446,25 +450,38 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1180,
-        "y": 380,
+        "x": 1200,
+        "y": 360,
         "wires": []
     },
     {
-        "id": "28e7071721891adb",
-        "type": "debug",
+        "id": "550c3934d80f61fa",
+        "type": "template",
         "z": "3ebd7dd1585179f7",
-        "name": "door_3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1180,
-        "y": 600,
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "success",
+        "output": "str",
+        "x": 520,
+        "y": 440,
+        "wires": [
+            [
+                "bd3078397f909065"
+            ]
+        ]
+    },
+    {
+        "id": "bd3078397f909065",
+        "type": "http response",
+        "z": "3ebd7dd1585179f7",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 440,
         "wires": []
     }
 ]
