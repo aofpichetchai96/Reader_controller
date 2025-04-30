@@ -42,7 +42,7 @@
         "type": "MC Protocol Connection",
         "name": "",
         "host": "172.10.0.9",
-        "port": "5551",
+        "port": "6551",
         "protocol": "TCP",
         "frame": "1E",
         "plcType": "A",

@@ -8,6 +8,8 @@ services:
     container_name: my-php-fpm
     volumes:
       - .:/var/www/html
+    environment:
+      TZ: Asia/Bangkok
     restart: always
     networks:
       - app-network
@@ -21,6 +23,8 @@ services:
     volumes:
       - .:/var/www/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      TZ: Asia/Bangkok
     depends_on:
       - php-fpm
     restart: always
@@ -34,6 +38,8 @@ services:
       - "1880:1880"
     volumes:
       - ./node-red-data:/data
+    environment:
+      TZ: Asia/Bangkok
     restart: always
     networks:
       - app-network
@@ -46,6 +52,8 @@ services:
       - ./node-service:/app
     ports:
       - "850:850"
+    environment:
+      TZ: Asia/Bangkok
     # command: ["node", "index.js"] //Production
     restart: always
     networks:
@@ -56,6 +64,7 @@ services:
     container_name: my-mysql
     restart: always
     environment:
+      TZ: Asia/Bangkok
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: piramid_db
       MYSQL_USER: piramid

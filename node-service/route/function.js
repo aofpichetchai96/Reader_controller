@@ -3,6 +3,21 @@ require('dotenv').config();
 const config = process.env;
 const db = require('../db/mysql.js');
 
+const check_tokenid_member = async (tokenid) => {
+    let connection;
+    try {              
+        connection = await db.getConnection();     
+        tokenid = String(tokenid);
+        //เดี๋ยวตัว enddate ทำเพิ่ม
+        const [rs] = await db.query(`SELECT * FROM member WHERE cardnumber = ? and active = ? and status = ?`, [tokenid,1,1]); 
+        if(rs.length === 0) return false;        
+        return rs[0].id;     
+    } catch (error) {
+        return false;
+    } finally {
+        if (connection) connection.release(); // 👈 คืน connection
+    }  
+}
 const checkAccess = async (tokenid) => {    
     try {
         //เช็ค tokenid ที่อ่านได้ กับทางอาจารย์
@@ -21,23 +36,28 @@ const checkAccess = async (tokenid) => {
 }
 
 const getAccessDoorID = async (cjihao,mjihao) => {
-    try {                
+    let connection;
+    try {         
+        connection = await db.getConnection();     
         const [rs] = await db.query(`SELECT * FROM asc_list_door WHERE cjihao = ? AND mjihao = ?`, [cjihao,mjihao]);
         if(rs.length === 0) return false;        
         return rs[0].id;     
     } catch (error) {
         // console.log('Error in getAccessDoorID: ', error);
         return false;
+    } finally {
+        if (connection) connection.release(); // 👈 คืน connection
     }  
 }
 
 const OpenDoor = async (doorid) => {
     try {           
         await axios.get(`${config.URI_ACCESS_DOOR}?door=${doorid}`)
+        console.log('open doorid : ', doorid);
         return true;   
     } catch (error) {
         return false;   
     }  
 }
 
-module.exports = { checkAccess, getAccessDoorID, OpenDoor }
+module.exports = { checkAccess, getAccessDoorID, OpenDoor, check_tokenid_member }

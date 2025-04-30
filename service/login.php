@@ -1,3 +1,12 @@
+<?php
+  date_default_timezone_set('Asia/Bangkok');
+  session_start();
+  if (isset($_SESSION['user'])) {
+      header("Location: index.php");
+      exit;
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="th">
 
@@ -19,15 +28,15 @@
     <h2 class="text-2xl font-bold text-center mb-6">เข้าสู่ระบบ</h2>
 
     <!-- Login Form Fields -->
-    <form action="index.php" method="POST">
+    <form action="./login/check_login.php" method="POST">
       <div class="mb-4">
         <label for="username" class="block text-white">ชื่อผู้ใช้</label>
-        <input type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้" class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+        <input style="color: black;" type="text" id="username" name="username" placeholder="กรอกชื่อผู้ใช้" class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
       </div>
 
       <div class="mb-6">
         <label for="password" class="block text-white">รหัสผ่าน</label>
-        <input type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+        <input style="color: black;" type="password" id="password" name="password" placeholder="กรอกรหัสผ่าน" class="w-full p-2 border border-gray-300 rounded mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
       </div>
 
       <div class="mb-4">
