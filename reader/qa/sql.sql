@@ -15,6 +15,32 @@ ENGINE=InnoDB
 AUTO_INCREMENT=0
 ;
 
+CREATE TABLE `member` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT,
+	`firstname` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`lastname` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`phone` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`email` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`position` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`startdate` TIMESTAMP NULL DEFAULT (now()),
+	`enddate` DATETIME NULL DEFAULT NULL,
+	`cardnumber` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`active` TINYINT NULL DEFAULT '0',
+	`status` TINYINT NULL DEFAULT '1',
+	`updateby` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`createby` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`updatetime` TIMESTAMP NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	`creatime` TIMESTAMP NULL DEFAULT (now()),
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `active` (`active`) USING BTREE,
+	INDEX `position` (`position`) USING BTREE,
+	INDEX `id_key` (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=0
+;
+
 
 CREATE TABLE `scan_logs` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -37,7 +63,6 @@ COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=0
 ;
-
 
 CREATE TABLE `user` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -62,7 +87,6 @@ AUTO_INCREMENT=0
 ;
 
 
-
 CREATE TABLE `user_role` (
 	`role_id` INT NOT NULL AUTO_INCREMENT,
 	`role_name` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
@@ -71,32 +95,6 @@ CREATE TABLE `user_role` (
 	`createtime` TIMESTAMP NULL DEFAULT (now()),
 	PRIMARY KEY (`role_id`) USING BTREE,
 	INDEX `role_active` (`role_active`) USING BTREE
-)
-COLLATE='utf8mb4_0900_ai_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=0
-;
-
-CREATE TABLE `member` (
-	`id` BIGINT NOT NULL AUTO_INCREMENT,
-	`firstname` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`lastname` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`phone` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`email` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`position` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`startdate` TIMESTAMP NULL DEFAULT (now()),
-	`enddate` DATETIME NULL DEFAULT NULL,
-	`cardnumber` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`active` TINYINT NULL DEFAULT '0',
-	`status` TINYINT NULL DEFAULT '1',
-	`updateby` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`createby` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`updatetime` TIMESTAMP NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
-	`creatime` TIMESTAMP NULL DEFAULT (now()),
-	PRIMARY KEY (`id`) USING BTREE,
-	INDEX `active` (`active`) USING BTREE,
-	INDEX `position` (`position`) USING BTREE,
-	INDEX `id_key` (`id`) USING BTREE
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB

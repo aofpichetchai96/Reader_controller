@@ -2,15 +2,27 @@ const axios = require('axios');
 require('dotenv').config();
 const config = process.env;
 const db = require('../db/mysql.js');
-const e = require('express');
+const cron = require('node-cron');
 
+function checkEndDateValid(data) {
+    const endDate = data.enddate instanceof Date ? data.enddate : new Date(data.enddate);    
+    const currentDate = new Date();
+    if (currentDate > endDate) {
+      return false;
+    }    
+    return true;
+  }
 const check_tokenid_member = async (tokenid) => {
     let connection;
     try {              
         connection = await db.getConnection();     
         tokenid = String(tokenid);
-        //เดี๋ยวตัว enddate ทำเพิ่ม
+     
         const [rs] = await db.query(`SELECT * FROM member WHERE cardnumber = ? and active = ? and status = ?`, [tokenid,1,1]); 
+      
+        const ck_endate = checkEndDateValid(rs[0]);
+        if(!ck_endate) return false;
+
         if(rs.length === 0) return false;        
         console.log('Successful Member Token : ', tokenid);
         return rs[0].id;     
@@ -115,4 +127,73 @@ const OpenDoor = async (doorid) => {
     }  
 }
 
+// cron.schedule('0 * * * *', async() => { // 1 ชั่วโมง
+// cron.schedule('* * * * *', async () => { //1 นาที
+cron.schedule('0 1 * * *', async () => { //รันทุกวัน เวลา 01:00:00
+    try {        
+        const response = await schedule_clear_log_30_days();
+        console.log('schedule_clear_log_30_days :', response);
+    } catch (error) {
+        console.error('schedule_clear_log_30_days Error:', error.message);
+    }
+});
+
+const formatDate = (date) => {
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
+           `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+};  
+
+const schedule_clear_log_30_days = async () => {
+    let message_logs = '';
+    let count_log = 0;
+    let starttime;
+    let endtime;
+    const now = new Date();
+    starttime = formatDate(now);
+    const pastDate = new Date(now.setDate(now.getDate() - 30));
+    const formattedPastDate = formatDate(pastDate);
+
+    try{                    
+        const cnt_log = await db.query(`SELECT COUNT(id) as cnt FROM scan_logs WHERE createtime < ?`, [formattedPastDate]);
+        if(cnt_log[0][0].cnt === 0){
+            message_logs  = `No scan_logs. Count : ${cnt_log[0][0].cnt}`;    
+            count_log = 0;
+            const endtime_now = new Date();
+            endtime = formatDate(endtime_now);    
+            const sql_insert = `INSERT INTO clear_logs (count_log, message, datetime_cls, starttime, endtime) VALUES (?, ?, ?, ?, ?)`;
+            const values = [count_log, message_logs, formattedPastDate, starttime, endtime];
+            await db.query(sql_insert, values);
+            return true;
+        }
+        else{
+            message_logs  = `Count scan_logs : ${cnt_log[0][0].cnt}, `;
+            count_log = cnt_log[0][0].cnt;
+            const rs_delete = await db.query(`DELETE FROM scan_logs WHERE createtime < ?`, [formattedPastDate]);
+            if(rs_delete[0].affectedRows > 0){
+                message_logs += ` Delete scan_logs successfully.`; 
+            }else{
+                message_logs += ` Delete scan_logs failed.`; 
+            }
+
+            const endtime_now = new Date();
+            endtime = formatDate(endtime_now);
+            const sql_insert = `INSERT INTO clear_logs (count_log, message, datetime_cls, starttime, endtime) VALUES (?, ?, ?, ?, ?)`;
+            const values = [count_log, message_logs, formattedPastDate, starttime, endtime];
+            await db.query(sql_insert, values);
+            return true;
+        }
+    }catch(err){
+        message_logs  = `Error in schedule_clear_log_30_days : ${err.message}`;
+        count_log = 0; 
+        const endtime_now = new Date();
+        endtime = formatDate(endtime_now);
+        const sql_insert = `INSERT INTO clear_logs (count_log, message, datetime_cls, starttime, endtime) VALUES (?, ?, ?, ?, ?)`;
+        const values = [count_log, message_logs, formattedPastDate, starttime, endtime];
+        await db.query(sql_insert, values);
+        return true;
+    }
+} 
+
+   
 module.exports = { checkAccess, getAccessDoorID, OpenDoor, check_tokenid_member }

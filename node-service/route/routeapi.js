@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { checkAccess, getAccessDoorID, OpenDoor,check_tokenid_member } =  require('./function.js');
+
 // let cnt_rs = 0;
 router.get('/qa', async (req, res) => {
   try {
@@ -83,5 +84,5 @@ router.get('/qa', async (req, res) => {
     });
   }  
 });
-
+  
 module.exports = router;

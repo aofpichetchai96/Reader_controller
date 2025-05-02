@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $position = $_POST['position'];
     $enddate = date('Y-m-d H:i:s', strtotime($_POST['enddate']));
-    $cardnumber = $_POST['cardnumber'];
+    // $cardnumber = $_POST['cardnumber'];
+    $cardnumber = preg_replace('/\s+/', '', $_POST['cardnumber']);
     $createby = $_SESSION['user'] ? $_SESSION['user'] : null;
 
     if($member_id == ''){  

@@ -7,11 +7,34 @@
       exit;
   } 
 
-  $member = get_member();  
+  // ดึงข้อมูลสมาชิกทั้งหมด
+  $all_members = get_member();
+  
+  // กำหนดจำนวนสมาชิกต่อหน้า
+  $items_per_page = 5;
+  
+  // คำนวณจำนวนหน้าทั้งหมด
+  $total_pages = ceil(count($all_members) / $items_per_page);
+  
+  // รับเลขหน้าปัจจุบันจาก URL parameter หรือใช้หน้าแรก
+  $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+  
+  // ตรวจสอบให้แน่ใจว่าหน้าปัจจุบันไม่น้อยกว่า 1 และไม่มากกว่าจำนวนหน้าทั้งหมด
+  if ($current_page < 1) {
+      $current_page = 1;
+  } elseif ($current_page > $total_pages && $total_pages > 0) {
+      $current_page = $total_pages;
+  }
+  
+  // คำนวณ offset สำหรับการแสดงข้อมูล
+  $offset = ($current_page - 1) * $items_per_page;
+  
+  // ดึงข้อมูลสมาชิกเฉพาะหน้าปัจจุบัน
+  $members_on_page = array_slice($all_members, $offset, $items_per_page);
 
   if (isset($_POST['toggle_active']) && isset($_POST['user_id'])) {
     $active_member = active_member($_POST['user_id']);  
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: " . $_SERVER['PHP_SELF'] . (isset($_GET['page']) ? "?page=" . $_GET['page'] : ""));
     exit();
   }
 ?>
@@ -72,8 +95,8 @@
         </thead>
 
         <tbody id="memberTable">
-        <?php if(count($member) > 0 ) { 
-          foreach ($member as $user => $value) { ?>
+        <?php if(count($members_on_page) > 0 ) { 
+          foreach ($members_on_page as $user => $value) { ?>
             <tr>
               <td class="px-4 py-2 border"><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></td>
               <td class="px-4 py-2 border"><?php echo $value['phone']; ?></td>
@@ -86,9 +109,9 @@
                     <input type="hidden" name="user_id" value="<?php echo $value['id']; ?>">
                     <input type="hidden" name="toggle_active" value="1">
                     <?php if($value['active'] == 1){ ?>
-                      <button type="submit" class="w-40 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">อณุญาติ</button>
+                      <button type="submit" class="w-40 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">อนุญาต</button>
                     <?php } else { ?>
-                      <button type="submit" class="w-40 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">ไม่อณุญาติ</button>
+                      <button type="submit" class="w-40 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">ไม่อนุญาต</button>
                     <?php } ?>
                   </form>
               </td>                
@@ -104,6 +127,53 @@
           <?php } ?>
         </tbody>
       </table>
+      
+      <!-- ส่วนของการแบ่งหน้า (Pagination) -->
+      <?php if ($total_pages > 1): ?>
+      <div class="mt-6 flex justify-center">
+        <div class="flex space-x-1">
+          <!-- ปุ่มย้อนกลับไปหน้าแรก -->
+          <?php if ($current_page > 1): ?>
+            <a href="?page=1" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">«</a>
+          <?php endif; ?>
+          
+          <!-- ปุ่มย้อนกลับ 1 หน้า -->
+          <?php if ($current_page > 1): ?>
+            <a href="?page=<?php echo $current_page - 1; ?>" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">‹</a>
+          <?php endif; ?>
+          
+          <!-- แสดงหมายเลขหน้า -->
+          <?php
+            // กำหนดจำนวนปุ่มที่แสดง
+            $visible_pages = 5;
+            $start_page = max(1, min($current_page - floor($visible_pages / 2), $total_pages - $visible_pages + 1));
+            $end_page = min($total_pages, $start_page + $visible_pages - 1);
+            
+            // ปรับ start_page ถ้าจำเป็น
+            if ($end_page - $start_page + 1 < $visible_pages) {
+                $start_page = max(1, $end_page - $visible_pages + 1);
+            }
+            
+            for ($i = $start_page; $i <= $end_page; $i++): 
+          ?>
+            <a href="?page=<?php echo $i; ?>" class="px-4 py-2 <?php echo ($i == $current_page) ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'; ?> rounded hover:bg-blue-500 hover:text-white">
+              <?php echo $i; ?>
+            </a>
+          <?php endfor; ?>
+          
+          <!-- ปุ่มไปข้างหน้า 1 หน้า -->
+          <?php if ($current_page < $total_pages): ?>
+            <a href="?page=<?php echo $current_page + 1; ?>" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">›</a>
+          <?php endif; ?>
+          
+          <!-- ปุ่มไปหน้าสุดท้าย -->
+          <?php if ($current_page < $total_pages): ?>
+            <a href="?page=<?php echo $total_pages; ?>" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">»</a>
+          <?php endif; ?>
+        </div>
+      </div>
+      <?php endif; ?>
+      
     </div>
   </main>
 
@@ -115,6 +185,7 @@
       <!-- Form to Add/Edit Member -->
       <form action="./function/save_member.php" method="POST">
           <input type="hidden" id="member_id" name="member_id" value="">
+          <input type="hidden" name="current_page" value="<?php echo $current_page; ?>">
           <input type="text" id="firstname" name="firstname" placeholder="ชื่อ" class="mb-2 p-2 border w-full" required>
           <input type="text" id="lastname" name="lastname" placeholder="นามสกุล" class="mb-2 p-2 border w-full" required>
           <input type="text" id="phone" name="phone" placeholder="เบอร์โทร" class="mb-2 p-2 border w-full" required>
@@ -201,7 +272,7 @@
       const input = document.getElementById('searchInput').value.toLowerCase();
       const rows = document.querySelectorAll('#memberTable tr');
       rows.forEach(row => {
-        const phone = row.children[1].innerText;
+        const phone = row.children ? (row.children[1] ? row.children[1].innerText.toLowerCase() : '') : '';
         row.style.display = phone.includes(input) ? '' : 'none';
       });
     }
@@ -218,7 +289,8 @@
         cancelButtonText: 'ยกเลิก'
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = './function/delete_member.php?id=' + id;
+          // ส่งหน้าปัจจุบันไปด้วย เพื่อให้กลับมาที่หน้าเดิมหลังลบ
+          window.location.href = './function/delete_member.php?id=' + id + '&page=<?php echo $current_page; ?>';
         }
       });
     }
