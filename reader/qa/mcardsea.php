@@ -1,4 +1,5 @@
 <?php
+    // sleep(1); 
     error_reporting(E_ERROR | E_PARSE);
     ini_set('display_errors', 0);
     require_once('config.php');
@@ -12,6 +13,7 @@
         'data' => array(
             array(
                 'cardid' => $_GET['cardid'],
+                // 'cardid' => str_replace(' ', '+', $_GET['cardid']),
                 'cjihao' => $_GET['cjihao'],
                 'mjihao' => (int)$_GET['mjihao'],
                 'status'=>1,
@@ -22,7 +24,9 @@
         'code' => 0,
         'message' => 'success'
     );
-
+    // $cardid_replace = str_replace(' ', '+', $_GET['cardid']);
+    // echo $cardid_replace;
+    // print_r($jarr); die;
     header('Content-type: application/json');
     header("Connection: close");
    
