@@ -54,7 +54,8 @@ services:
       - "850:850"
     environment:
       TZ: Asia/Bangkok
-    # command: ["node", "index.js"] //Production
+    command: ["node", "index.js"]
+    # command: ["sh","-c","npm install && node index.js"]
     restart: always
     networks:
       - app-network

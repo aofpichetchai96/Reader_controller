@@ -36,7 +36,7 @@
         <span class="font-semibold text-xl">จัดการ User</span>
       </a>
       <ul class="flex space-x-6 items-center">
-        <li><a href="index.php" class="text-white hover:underline">หน้าแรก</a></li>
+        <!-- <li><a href="index.php" class="text-white hover:underline">หน้าแรก</a></li> -->
         <li><a href="members.php" class="text-white hover:underline">จัดการสมาชิก</a></li>
         <li><a href="reports.php" class="text-white hover:underline">รายงาน</a></li>
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) { ?>

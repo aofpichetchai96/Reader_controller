@@ -15,6 +15,22 @@ ENGINE=InnoDB
 AUTO_INCREMENT=0
 ;
 
+
+CREATE TABLE `clear_logs` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`count_log` INT NULL DEFAULT NULL,
+	`message` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`datetime_cls` DATETIME NULL DEFAULT NULL,
+	`starttime` DATETIME NULL DEFAULT NULL,
+	`endtime` DATETIME NULL DEFAULT NULL,
+	`createtime` TIMESTAMP NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8mb4_0900_ai_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=0
+;
+
 CREATE TABLE `member` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`firstname` VARCHAR(150) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
@@ -41,7 +57,6 @@ ENGINE=InnoDB
 AUTO_INCREMENT=0
 ;
 
-
 CREATE TABLE `scan_logs` (
 	`id` BIGINT NOT NULL AUTO_INCREMENT,
 	`cardid` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
@@ -52,17 +67,20 @@ CREATE TABLE `scan_logs` (
 	`output` INT NULL DEFAULT NULL,
 	`code` INT NULL DEFAULT NULL,
 	`message` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	`rs_success` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	`rs_message` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
 	`createtime` TIMESTAMP NULL DEFAULT (now()),
 	PRIMARY KEY (`id`) USING BTREE,
 	INDEX `createtime` (`createtime`) USING BTREE,
-	INDEX `cardid` (`cardid`) USING BTREE
+	INDEX `cardid` (`cardid`) USING BTREE,
+	INDEX `type` (`type`) USING BTREE
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=0
 ;
+
 
 CREATE TABLE `user` (
 	`id` INT NOT NULL AUTO_INCREMENT,
@@ -95,22 +113,6 @@ CREATE TABLE `user_role` (
 	`createtime` TIMESTAMP NULL DEFAULT (now()),
 	PRIMARY KEY (`role_id`) USING BTREE,
 	INDEX `role_active` (`role_active`) USING BTREE
-)
-COLLATE='utf8mb4_0900_ai_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=0
-;
-
-
-CREATE TABLE `clear_logs` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`count_log` INT NULL DEFAULT NULL,
-	`message` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`datetime_cls` DATETIME NULL DEFAULT NULL,
-	`starttime` DATETIME NULL DEFAULT NULL,
-	`endtime` DATETIME NULL DEFAULT NULL,
-	`createtime` TIMESTAMP NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
-	PRIMARY KEY (`id`) USING BTREE
 )
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB

@@ -8,6 +8,7 @@
     $time = strval(time());
     $rs_success = 'false';
     $rs_message = 'fields';
+    $rs_type = 'null';
 
     $jarr = array(
         'data' => array(
@@ -35,7 +36,7 @@
         $opts = array('http' => array('timeout' => 2.0));
         $context = stream_context_create($opts);
         $response = @file_get_contents($sendUrl, false, $context);       
-        
+        // print_r($response); die;
         if ($response === false) {
             $logMessage = "Error Response Cardid : ".$_GET['cardid']. PHP_EOL;
             $logMessage .= "Error Response DateTime : ".date("Y-m-d H:i:s"). PHP_EOL;
@@ -53,6 +54,7 @@
             $response = json_decode($response);   
             $rs_success = ($response->success == 1 ) ? 'true' : 'false';
             $rs_message = $response->message ? $response->message : 'fields';        
+            $rs_type = $response->type ? $response->type : 'null';        
         }
 
     } catch (Exception $e) {
@@ -78,10 +80,10 @@
     $code = 0;
     $message = 'success';
 
-    $sql = "INSERT INTO scan_logs (cardid, cjihao, mjihao, status, time, output, code, message, rs_success, rs_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO scan_logs (cardid, cjihao, mjihao, status, time, output, code, message, type, rs_success, rs_message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $mysqli->prepare($sql);
     // s = string, i = integer
-    $stmt->bind_param("ssiisiisss", 
+    $stmt->bind_param("ssiisiissss", 
         $cardid, 
         $cjihao, 
         $mjihao, 
@@ -90,6 +92,7 @@
         $output, 
         $code, 
         $message, 
+        $rs_type,
         $rs_success, 
         $rs_message
     );

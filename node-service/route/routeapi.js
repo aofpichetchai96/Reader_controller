@@ -21,6 +21,7 @@ router.get('/qa', async (req, res) => {
           return  res.status(200).json({
               success: rscheckAccess.success,
               message: rscheckAccess.message,
+              type: 'student',
               cardid: cardid
           }); 
         }  
@@ -30,6 +31,7 @@ router.get('/qa', async (req, res) => {
           return  res.status(200).json({
               success: false,
               message: rscheckAccess.message+', Fields access door. ' + cjihao,
+              type: 'student',
               cardid: cardid
           }); 
         }
@@ -39,6 +41,7 @@ router.get('/qa', async (req, res) => {
           return  res.status(200).json({
               success: false,
               message: rscheckAccess.message+', Fields OpenDoor. ' + rsDoorId,
+              type: 'student',
               cardid: cardid
           }); 
         }
@@ -47,6 +50,7 @@ router.get('/qa', async (req, res) => {
         return res.status(200).json({
           success: true,
           message: rscheckAccess.message,
+          type: 'student',
           cardid: cardid
         });
 
@@ -57,6 +61,7 @@ router.get('/qa', async (req, res) => {
           return  res.status(200).json({
               success: false,
               message: 'Fields access door. ' + cjihao,
+              type: 'staft',
               cardid: cardid
           }); 
         }
@@ -66,6 +71,7 @@ router.get('/qa', async (req, res) => {
           return  res.status(200).json({
               success: false,
               message: 'Fields OpenDoor. ' + rsDoorId,
+              type: 'staft',
               cardid: cardid
           }); 
         }
@@ -73,6 +79,7 @@ router.get('/qa', async (req, res) => {
         return res.status(200).json({
           success: true,
           message: 'Successful Statf.',
+          type: 'staft',
           cardid: cardid
         });
       }
@@ -80,6 +87,7 @@ router.get('/qa', async (req, res) => {
     return  res.status(200).json({
         success: false,
         message: 'Fields service node.',
+        type: 'null',
         cardid: 0
     });
   }  

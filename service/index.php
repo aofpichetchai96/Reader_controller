@@ -5,9 +5,10 @@
       header("Location: login.php");
       exit;
   }
+  header("Location: members.php");
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="th">
 
 <head>
@@ -26,13 +27,11 @@
         <span class="font-semibold text-xl"></span>
       </a>
       <ul class="flex space-x-6 items-center">
-        <li><a href="index.php" class="text-white hover:underline">หน้าแรก</a></li>
         <li><a href="members.php" class="text-white hover:underline">จัดการสมาชิก</a></li>
         <li><a href="reports.php" class="text-white hover:underline">รายงาน</a></li>
         <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) { ?>
           <li><a href="admin.php" class="text-white hover:underline">จัดการ User</a></li>
         <?php } ?>
-        <!-- <li><a href="contacts.php" class="text-white hover:underline">ผู้ติดต่อ</a></li> -->
         <a href="./login/logout.php" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Log out</a>
       </ul>
       
@@ -40,7 +39,6 @@
   </nav>
 
   <main class="container mx-auto">
-    <!-- หน้าตัวอย่าง: โปรดเลือกเมนูด้านบน -->
     <div class="bg-white p-6 rounded-lg shadow-md text-center">
     <span style="font-size: 40px; color: red">(อยู่ระหว่างการพัฒนา)</span>
       <h1 class="text-2xl font-bold mb-2">ยินดีต้อนรับสู่ระบบจัดการสมาชิก</h1>
@@ -49,4 +47,4 @@
   </main>
 </body>
 
-</html>
+</html> -->

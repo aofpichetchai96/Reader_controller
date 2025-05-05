@@ -24,7 +24,7 @@ const check_tokenid_member = async (tokenid) => {
         if(!ck_endate) return false;
 
         if(rs.length === 0) return false;        
-        console.log('Successful Member Token : ', tokenid);
+        // console.log('Successful Member Token : ', tokenid);
         return rs[0].id;     
     } catch (error) {
         return false;
@@ -47,7 +47,7 @@ const checkAccess = async (tokenid) => {
             const headers = {'Content-Type': 'application/json'};
             const rs = await axios.post(config.URL_VALIDQRCODE, data ,{ headers: headers });          
             if(rs.data.statusValid === 'true'){
-                console.log('Successful QRCode Token : ', tokenid);
+                // console.log('Successful QRCode Token : ', tokenid);
                 message_rs = rs.data.message;
                 let data_rs = {
                     success: true,
@@ -57,7 +57,7 @@ const checkAccess = async (tokenid) => {
             }
             else{     
                 message_rs = rs.data.message;
-                console.log('Fields QRCode Token : ', tokenid);       
+                // console.log('Fields QRCode Token : ', tokenid);       
                 let data_rs = {
                     success: false,
                     message: message_rs,
@@ -74,7 +74,7 @@ const checkAccess = async (tokenid) => {
             const rs_card = await axios.post(config.URL_VALIDCARD, data_card ,{ headers: headers });
 
             if(rs_card.data.statusValid === 'true'){
-                console.log('Successful Card Token : ', tokenid);
+                // console.log('Successful Card Token : ', tokenid);
                 message_rs = rs_card.data.message;
                 let data_rs = {
                     success: true,
@@ -82,7 +82,7 @@ const checkAccess = async (tokenid) => {
                 }            
                 return data_rs;
             }else{               
-                console.log('Fields Card Token : ', tokenid);   
+                // console.log('Fields Card Token : ', tokenid);   
                 message_rs = rs_card.data.message;    
                 let data_rs = {
                     success: false,
@@ -92,7 +92,7 @@ const checkAccess = async (tokenid) => {
             }        
         }
     }catch (error) {
-        console.log('Error in checkAccess : ', error.message);
+        // console.log('Error in checkAccess : ', error.message);
         let data_rs = {
             success: false,
             message: error.message,
@@ -119,7 +119,7 @@ const OpenDoor = async (doorid) => {
     try {    
         await new Promise(resolve => setTimeout(resolve, 300));       
         await axios.get(`${config.URI_ACCESS_DOOR}?door=${doorid}`)
-        console.log('open doorid : ', doorid);
+        // console.log('open doorid : ', doorid);
         await new Promise(resolve => setTimeout(resolve, 250));
         return true;   
     } catch (error) {
@@ -132,7 +132,7 @@ const OpenDoor = async (doorid) => {
 cron.schedule('0 1 * * *', async () => { //รันทุกวัน เวลา 01:00:00
     try {        
         const response = await schedule_clear_log_30_days();
-        console.log('schedule_clear_log_30_days :', response);
+        // console.log('schedule_clear_log_30_days :', response);
     } catch (error) {
         console.error('schedule_clear_log_30_days Error:', error.message);
     }
